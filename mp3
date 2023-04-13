@@ -1,0 +1,103 @@
+from random import choice
+
+class MP3Calar():
+    def __init__(self,şarkılar = []):
+        self.suanCalanSarki = ""
+        self.ses = 100
+        self.sarkiListesi = şarkılar
+        self.durum = True
+
+    def sarkiSec(self):
+        sayac = 1
+        for sarki in self.sarkiListesi:
+            print("{}){}".format(sayac, sarki))
+            sayac += 1
+
+        secilenSarki = int(input("Seçmek istediğiniz şarkının numarasını giriniz:"))
+        while secilenSarki < 1 or secilenSarki > len(self.sarkiListesi):
+            secilenSarki = int(
+                input("Seçmek istediğiniz şarkının numarasını DOĞRU giriniz: (1-{})".format(self.sarkiListesi)))
+
+        self.suanCalanSarki = self.sarkiListesi[secilenSarki - 1]
+
+
+    def sesArttir(self):
+        if self.ses == 100:
+            pass
+        else:
+            self.ses += 10
+    def sesAzalt(self):
+        if self.ses == 0:
+            pass
+        else:
+            self.ses -= 10
+    def rastgeleSarkiSec(self):
+        rsseç = choice(self.sarkiListesi)
+        self.suanCalanSarki = rsseç
+    def sarkiEkle(self):
+        sanatçi = input("Sanatçıyı/Grubu giriniz:")
+        şarkı = input("Şarkıyı giriniz:")
+        self.sarkiListesi.append(sanatçi + "  -  " + şarkı)
+    def sarkiSil(self):
+        sayac = 1
+        for sarki in self.sarkiListesi:
+            print("{}){}".format(sayac, sarki))
+            sayac += 1
+
+        silinecekSarki = int(input("Silmek istediğiniz şarkının numarasını giriniz:"))
+        while silinecekSarki < 1 or silinecekSarki > len(self.sarkiListesi):
+            silinecekSarki = int(
+                input("Silmek istediğiniz şarkının numarasını DOĞRU giriniz: (1-{})".format(self.sarkiListesi)))
+
+        self.sarkiListesi.pop(silinecekSarki - 1)
+    def kapa(self):
+        self.durum = False
+    def menuGoster(self):
+        print("""
+        Şarkı Listesi : {}
+        Şuan Çalan Şarkı : {}
+        Ses Düzeyi : {}
+        
+        1- Şarkı seç
+        2- Ses arttır
+        3- Ses azalt
+        4- Rastgele şarkı seç
+        5- Şarkı ekle
+        6- Şarkı sil
+        7- Kapat
+        """.format(self.sarkiListesi, self.suanCalanSarki, self.ses))
+    def secim(self):
+        sec = int(input("Seçiminizi Giriniz:"))
+        while sec < 1 or sec >7:
+            sec = int(input("Mevcut Değerler Arasında Seçiniz:"))
+        return sec
+    def calistir(self):
+        self.menuGoster()
+        secim = self.secim()
+
+        if secim == 1:
+            self.sarkiSec()
+
+        if secim == 2:
+            self.sesArttir()
+
+
+        if secim == 3:
+            self.sesAzalt()
+
+        if secim == 4:
+            self.rastgeleSarkiSec()
+
+        if secim == 5:
+            self.sarkiEkle()
+
+        if secim == 6:
+            self.sarkiSil()
+
+        if secim == 7:
+            self.kapa()
+
+
+mp3calar = MP3Calar()
+while mp3calar.durum:
+    mp3calar.calistir()
